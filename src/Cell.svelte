@@ -17,6 +17,8 @@
   export let onMoveFocus = () => {};
   export let onFlipDirection = () => {};
   export let onHistoricalChange = () => {};
+  export let highlightColor;
+  export let lowlightColor;
 
   let element;
 
@@ -24,6 +26,18 @@
   $: correct = answer === value;
   $: showCheck = isChecking && value;
 
+  /* @TODO this is bad */
+  $: styleOverride = null;
+  $: {
+    if (highlightColor && !isFocused) {
+      styleOverride = `fill: ${highlightColor};`
+    } else if (lowlightColor && !isSecondarilyFocused) {
+      styleOverride = `fill: ${lowlightColor};`
+    } else {
+      styleOverride = '';
+    }
+  }
+  
   function onFocusSelf() {
     if (!element) return;
     if (isFocused) element.focus();
@@ -103,7 +117,10 @@
   on:click="{onClick}"
   on:keydown="{onKeydown}"
   bind:this="{element}">
-  <rect width="1" height="1"></rect>
+  <rect
+    width="1"
+    height="1"
+    style={styleOverride}></rect>
 
   {#if showCheck && !correct}
     <line x1="0" y1="1" x2="1" y2="0"></line>
@@ -138,6 +155,10 @@
 
   g.is-focused rect {
     fill: var(--primary-highlight-color);
+  }
+
+  g.has-other rect {
+    fill: blue;
   }
 
   text {

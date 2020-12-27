@@ -22,9 +22,13 @@
   export let showKeyboard;
   export let keyboardStyle = "outline";
 
+  export let cells = [];
+  export let focusedCellIndex = 0;
+  export let focusedDirection = "across";
+  export let otherPlayers;
+
   let width = 0;
-  let focusedDirection = "across";
-  let focusedCellIndex = 0;
+  
   let isRevealing = false;
   let isLoaded = false;
   let isChecking = false;
@@ -34,8 +38,7 @@
   let originalClues = [];
   let validated = [];
   let clues = [];
-  let cells = [];
-
+  
   const onDataUpdate = () => {
     originalClues = createClues(data);
     validated = validateClues(originalClues);
@@ -161,6 +164,7 @@
         stacked="{stacked}"
         isLoaded="{isLoaded}"
         keyboardStyle="{keyboardStyle}"
+        otherPlayers="{otherPlayers}"
         bind:cells
         bind:focusedCellIndex
         bind:focusedDirection />

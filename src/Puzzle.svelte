@@ -20,6 +20,7 @@
   export let showKeyboard;
   export let isLoaded;
   export let keyboardStyle;
+  export let otherPlayers;
 
   let element;
   let cellsHistoryIndex = 0;
@@ -41,6 +42,11 @@
     focusedDirection == "down" ? a.x - b.x || a.y - b.y : a.y - b.y || a.x - b.x
   );
 
+  $: otherPlayersHighlightedCells = {};
+  $: if (otherPlayers) {
+    updateOtherPlayersHighlightedCells();
+  }
+
   onMount(() => {
     isMobile = checkMobile();
   });
@@ -51,6 +57,26 @@
       focusedDirection,
       focusedCell,
     });
+  }
+
+  function updateOtherPlayersHighlightedCells() {
+    const highlightMap = {};
+    for (let player of otherPlayers) {
+      if (player && player.position) {
+        const { index, direction } = player.position;
+        const focused = getSecondarilyFocusedCells({
+          cells,
+          focusedDirection: direction,
+          focusedCell: cells[index],
+        });
+
+        focused.forEach((index) => {
+          highlightMap[index] = player.secondaryColor;
+        });
+      }
+    }
+
+    otherPlayersHighlightedCells = highlightMap;
   }
 
   function onCellUpdate(index, newValue, diff = 1, doReplaceFilledCells) {
@@ -101,10 +127,10 @@
       onFlipDirection();
     } else {
       focusedCellIndex = index;
-      
+
       if (!cells[focusedCellIndex].clueNumbers[focusedDirection]) {
         const newDirection = focusedDirection === "across" ? "down" : "across";
-        focusedDirection = newDirection
+        focusedDirection = newDirection;
       }
 
       focusedCellIndexHistory = [
@@ -210,6 +236,10 @@
         isRevealing="{isRevealing}"
         isChecking="{isChecking}"
         isFocused="{focusedCellIndex == index && !isDisableHighlight}"
+        highlightColor="{// is bad
+          (otherPlayers.filter((p) => p.position.index === index)[0] || {}).color
+        }"
+        lowlightColor="{otherPlayersHighlightedCells[index]}"
         isSecondarilyFocused="{secondarilyFocusedCells.includes(index) && !isDisableHighlight}"
         onFocusCell="{onFocusCell}"
         onCellUpdate="{onCellUpdate}"
