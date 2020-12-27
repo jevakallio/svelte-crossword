@@ -144,15 +144,6 @@
     </slot>
 
     <div class="play" class:stacked class:is-loaded="{isLoaded}">
-      <Clues
-        clues="{clues}"
-        cellIndexMap="{cellIndexMap}"
-        stacked="{stacked}"
-        isDisableHighlight="{isDisableHighlight}"
-        isLoaded="{isLoaded}"
-        bind:focusedCellIndex
-        bind:focusedCell
-        bind:focusedDirection />
       <Puzzle
         clues="{clues}"
         focusedCell="{focusedCell}"
@@ -167,6 +158,15 @@
         otherPlayers="{otherPlayers}"
         bind:cells
         bind:focusedCellIndex
+        bind:focusedDirection />
+      <Clues
+        clues="{clues}"
+        cellIndexMap="{cellIndexMap}"
+        stacked="{stacked}"
+        isDisableHighlight="{isDisableHighlight}"
+        isLoaded="{isLoaded}"
+        bind:focusedCellIndex
+        bind:focusedCell
         bind:focusedDirection />
     </div>
 
@@ -184,7 +184,7 @@
   article {
     position: relative;
     background-color: transparent;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .play {

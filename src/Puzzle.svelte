@@ -263,7 +263,7 @@
 <style>
   section {
     position: sticky;
-    top: 1em;
+    top: 3em;
     order: 0;
     flex: 1;
     height: fit-content;

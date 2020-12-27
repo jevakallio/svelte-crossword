@@ -54,11 +54,10 @@
 <style>
   section {
     position: sticky;
-    top: 1em;
     flex: 0 1 16em;
     height: fit-content;
     margin: 0;
-    margin-right: 1em;
+    margin-left: 1em;
   }
 
   section.is-loaded.stacked {
@@ -96,7 +95,7 @@
     .clues--stacked:not(.is-loaded) {
       display: block;
     }
-
+    
     .clues--list:not(.is-loaded) {
       display: none;
     }
