@@ -71,7 +71,8 @@
         });
 
         focused.forEach((index) => {
-          highlightMap[index] = player.secondaryColor;
+          highlightMap[index] = highlightMap[index] || [];
+          highlightMap[index].push(player.hues[1]);
         });
       }
     }
@@ -236,10 +237,10 @@
         isRevealing="{isRevealing}"
         isChecking="{isChecking}"
         isFocused="{focusedCellIndex == index && !isDisableHighlight}"
-        highlightColor="{// is bad
-          (otherPlayers.filter((p) => p.position.index === index)[0] || {}).color
+        highlightColor="{// is very bad
+          ((otherPlayers.find((p) => p.position.index === index) || {}).hues || [])[1]
         }"
-        lowlightColor="{otherPlayersHighlightedCells[index]}"
+        maskColors="{otherPlayersHighlightedCells[index] || []}"
         isSecondarilyFocused="{secondarilyFocusedCells.includes(index) && !isDisableHighlight}"
         onFocusCell="{onFocusCell}"
         onCellUpdate="{onCellUpdate}"

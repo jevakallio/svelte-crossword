@@ -18,7 +18,7 @@
   export let onFlipDirection = () => {};
   export let onHistoricalChange = () => {};
   export let highlightColor;
-  export let lowlightColor;
+  export let maskColors = [];
 
   let element;
 
@@ -31,8 +31,6 @@
   $: {
     if (highlightColor && !isFocused) {
       styleOverride = `fill: ${highlightColor};`
-    } else if (lowlightColor && !isSecondarilyFocused) {
-      styleOverride = `fill: ${lowlightColor};`
     } else {
       styleOverride = '';
     }
@@ -122,6 +120,15 @@
     height="1"
     style={styleOverride}></rect>
 
+  {#each maskColors as mask}
+    <rect
+      class="mask"
+      width="1"
+      height="1"
+      style={`fill: ${mask};`}>
+    </rect>
+  {/each}
+
   {#if showCheck && !correct}
     <line x1="0" y1="1" x2="1" y2="0"></line>
   {/if}
@@ -159,6 +166,11 @@
 
   g.has-other rect {
     fill: blue;
+  }
+
+  .mask {
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   text {

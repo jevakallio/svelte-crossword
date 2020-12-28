@@ -140,7 +140,11 @@
       onClear="{onClear}"
       onReveal="{onReveal}"
       onCheck="{onCheck}">
-      <Toolbar actions="{actions}" on:event="{onToolbarEvent}" />
+      <Toolbar actions="{actions}" on:event="{onToolbarEvent}">
+        <div slot="top">
+          <slot name="toolbar-top"></slot>
+        </div>
+      </Toolbar>
     </slot>
 
     <div class="play" class:stacked class:is-loaded="{isLoaded}">

@@ -6,6 +6,10 @@
 </script>
 
 <div class="toolbar">
+  <slot name="top">
+    <div />
+  </slot>
+  <div class="toolbar-buttons">
   {#each actions as action}
     {#if action === 'clear'}
       <button on:click="{() => dispatch('event', 'clear')}">Clear</button>
@@ -15,6 +19,7 @@
       <button on:click="{() => dispatch('event', 'check')}">Check</button>
     {/if}
   {/each}
+  </div>
 </div>
 
 <style>
@@ -22,7 +27,7 @@
     margin-bottom: 1em;
     padding: 1em 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     font-family: var(--font);
     font-size: 0.85em;
     background-color: transparent;
